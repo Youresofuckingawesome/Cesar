@@ -1,12 +1,12 @@
 #pragma once
 
+#include <memory>
+
 #include <array>
 #include <vector>
 #include <forward_list>
 
 namespace Ces {
-
-	enum class ContainType { Vector, Array, List };
 
 	template<typename __type>
 	class Container
@@ -23,8 +23,28 @@ namespace Ces {
 		virtual __type& operator[](unsigned int index) = 0;
 	};
 
+	enum class ContainerType { Vector, Array, List };
+
 	class FabricContainer
 	{
+	public:
+		FabricContainer(ContainerType type)
+		{
+			switch (type)
+			{
+			case ContainerType::Vector:
+				m_Cont = std::make_unique<Vector>();
+				break;
+			case ContainerType::Array:
+				break; // TODO: Create array abstract
+			case ContainerType::List:
+				break; // TODO: Create list abstract
+			}
+		}
 
+		std::unique_ptr<Container>& GetContainer() const { return m_Cont; }
+
+	private:
+		std::unique_ptr<Container> m_Cont;
 	};
 }
