@@ -29,7 +29,7 @@ namespace Ces {
 	template<typename __type>
 	__type& Vector<__type>::operator[](unsigned int index)
 	{
-		return m_Cont[index]&;
+		return &m_Cont[index];
 	}
 
 }

@@ -5,7 +5,7 @@
 namespace Ces {
 
 	template<typename __type>
-	class Vector : public Container
+	class Vector : public Container<__type>
 	{
 	public:
 		Vector() = default;
