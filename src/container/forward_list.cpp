@@ -3,31 +3,31 @@
 namespace Ces {
 
 	template<typename __type>
-	void Forward_List<__type>::Add(__type item)
+	void List<__type>::Add(__type item)
 	{
-		m_Cont.push_front(item);
+		m_Cont.push_back(item);
 	}
 
 	template<typename __type>
-	void Forward_List<__type>::Delete(__type item)
+	void List<__type>::Delete(__type item)
 	{
 		m_Cont.erase(item);
 	}
 
 	template<typename __type>
-	void Forward_List<__type>::DeleteByIndex(unsigned int index)
+	void List<__type>::DeleteByIndex(unsigned int index)
 	{
 		m_Cont.erase(m_Cont.begin() + index);
 	}
 
 	template<typename __type>
-    __type Forward_List<__type>::operator[](unsigned int index)
+    __type List<__type>::operator[](unsigned int index) const
 	{
 		return m_Cont[index];
 	}
 
 	template<typename __type>
-    __type& Forward_List<__type>::operator[](unsigned int index)
+    __type& List<__type>::operator[](unsigned int index)
 	{
 		return &m_Cont[index];
 	}

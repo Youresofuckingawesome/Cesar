@@ -9,9 +9,9 @@ namespace Ces {
 	{
 		assert(true && "Array doesn't have Add method!");
 	}
-	
+
 	template<typename __type, unsigned int __capacity>
-	void Array<__type, __capacity>::Add(__type item)
+	void Array<__type, __capacity>::Delete(__type item)
 	{
 		assert(true && "Array doesn't have Delete method!");
 	}
@@ -23,7 +23,7 @@ namespace Ces {
 	}
 
 	template<typename __type, unsigned int __capacity>
-	__type Array<__type, __capacity>::operator[](unsigned int index)
+	__type Array<__type, __capacity>::operator[](unsigned int index) const
 	{
 		return m_Cont[index];
 	}
