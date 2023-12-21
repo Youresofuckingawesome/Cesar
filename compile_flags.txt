@@ -1,0 +1,3 @@
+-Isrc/
+-Isrc/container
+-I/usr/local/include

@@ -1,4 +1,3 @@
-SRC="src/main.cpp src/container/vector.cpp"
-DIR="src/container/"
+SRC="src/main.cpp src/generator.cpp src/container/*.cpp"
 
-g++ -o out ${SRC} -I${DIR}
+g++ -o out ${SRC} -Isrc/ -Isrc/container

@@ -21,6 +21,6 @@ namespace Ces {
 		
 	private:
 		std::list<__type> m_Cont;
-	}
+	};
 	
 }

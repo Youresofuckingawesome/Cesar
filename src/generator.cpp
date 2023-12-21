@@ -4,7 +4,7 @@ Generator::Generator()
     : m_random(m_seed())
 { }
 
-template<typename __type = int>
+template<typename __type>
 __type Generator::HardRandom(__type minValue, __type maxValue)
 {
     std::uniform_int_distribution<__type> uid(minValue, maxValue);
