@@ -1,7 +1,8 @@
 #pragma once
 
-#include <container/vector.h>
-#include <container/container.h>
+#include <container.h>
+#include <vector.h>
+#include <array.h>
 
 namespace Ces {
 
@@ -16,8 +17,7 @@ namespace Ces {
 			switch (type)
 			{
 			case ContainerType::Vector:
-				m_Cont = std::make_unique<Vector>();
-				break;
+				break; // TODO: Create vector abstract
 			case ContainerType::Array:
 				break; // TODO: Create array abstract
 			case ContainerType::List:
