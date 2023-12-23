@@ -1,17 +1,16 @@
 ﻿#include <iostream>
 
-#include <generator.h>
 #include <fabriccontainer.h>
 
 int main(void)
 {
-    Ces::FabricContainer<int> container(Ces::ContainerType::Vector);
-    container.GenerateContent(10000);
-	auto& cont = container.GetContainer();
+    Ces::FabricContainer<float> container(Ces::ContainerType::Array);
+    container.GenerateContent(12);
+	auto cont = container.GetContainer();
 
-    for (int i = 0; i < cont.Size(); i++)
+    for (int i = 0; i < cont->Size(); i++)
     {
-        std::cout << cont[i] << std::endl;
+        std::cout << cont->GetElement(i) << std::endl;
     }
 
     return 0;

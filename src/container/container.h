@@ -19,8 +19,7 @@ namespace Ces {
 
 		virtual size_t Size() const = 0;
 
-		virtual __type operator[](unsigned int index) const = 0;
-		virtual __type& operator[](unsigned int index) = 0;
+		virtual __type& GetElement(int index) = 0;
 	};
 
 }
