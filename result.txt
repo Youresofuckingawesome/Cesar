@@ -1,0 +1,6 @@
+1 000 000 microseconds = 1 second
+Time of generate array: 1.76065e+07 microseconds
+Time of getting values from list: 640112 microseconds
+Time of operation execution: 883962 microseconds
+Time of one operation execution: 0.000812832 microseconds
+The result = 1.50006e+12

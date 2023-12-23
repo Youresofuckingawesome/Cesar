@@ -134,9 +134,11 @@
     <ClInclude Include="src\container\container.h" />
     <ClInclude Include="src\container\fabriccontainer.h" />
     <ClInclude Include="src\container\vector.h" />
+    <ClInclude Include="timetest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\container\vector.cpp" />
+    <ClCompile Include="src\generator.h" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -2,153 +2,137 @@
 #include <chrono>
 #include <fstream>
 #include <vector>
+#include <deque>
 #include <string>
 #include <math.h>
+#include <generator.h>
+#include "../timetest.h"
 
-using namespace std::chrono;
-
-int randint(int minValue, int maxValue, int stepSize = 1) {
-    if (stepSize < 0) {
-        throw std::invalid_argument("stepSize must be > 0");
+template<typename Container>
+void findMaxAndMin(Container& container) {
+    double max = container[0], min = container[0];
+    for (auto& element : container) {
+        if (element < min) {
+            min = element;
+        }
+        else if (element > max) {
+            max = element;
+        }
     }
-    else {
-        int min = ceil(minValue / stepSize);
-        int max = floor(maxValue / stepSize);
-        int randValue = ((double)rand() / (RAND_MAX + 1) * (max - min) + min);
-        return (int)randValue * stepSize;
-    }
+    std::cout << "max = " << max << std::endl << "min = " << min << std::endl;
 }
 
-long int randLongInt(int minValue, int maxValue, int stepSize = 1) {
-    if (stepSize < 0) {
-        throw std::invalid_argument("stepSize mast be > 0");
-    }
-    else {
-        int min = ceil(minValue / stepSize);
-        int max = floor(maxValue / stepSize);
-        long int randValue = ((double)rand() / (RAND_MAX + 1) * (max - min) + min);
-        return (long int)randValue * stepSize;
-    }
-}
-
-float randFloat(float minValue, float maxValue, float stepSize) {
-    if (stepSize < 0 || maxValue < stepSize) {
-        throw std::invalid_argument("stepSize must be > 0");
-    } 
-    else if (stepSize <= 1) {
-        int transferCoeficent = (int)(1 / stepSize);
-        int min = minValue * transferCoeficent;
-        int max = maxValue * transferCoeficent;
-        float randValue = ((double)rand() / (RAND_MAX + 1) * (max - min) + min);
-        return (float) randValue * stepSize;
-    }
-    else {
-        float randValue = ((double)rand() / (RAND_MAX + 1) * (maxValue - minValue) + minValue);
-        return (float)randValue / stepSize;
-    }
-
-}
-
-double randDouble(double minValue, double maxValue, double stepSize) {
-    if (stepSize < 0 || maxValue < stepSize) {
-        throw std::invalid_argument("stepSize must be > 0");
-    }
-    else if (stepSize <= 1) {
-        long long int transferCoeficent = (1 / stepSize);
-        long int min = minValue * transferCoeficent;
-        int max = maxValue * transferCoeficent;
-        double randValue = ((double)rand() / (RAND_MAX + 1) * (max - min) + min);
-        return (double)randValue * stepSize;
-    }
-    else {
-
-    }
-
-}
-
-float* generateList(int count) {
-    float* testData = new float[count];
-    
-    return testData;
-}
 
 int main(void)
 {
+    setlocale(0, "");
     srand((unsigned)time(0));
 
-    int length = 300 * 1000 * 1000;
-    // измерение времени генерации масива
-    auto startGenerateList = high_resolution_clock::now();
-    //-----------
-    double* arrayOfRandomValues = new double[length];
-    for (int i = 0; i < length; i++) {
-        arrayOfRandomValues[i] = randDouble(1, 10000, 0.1);
-    }
-    //------------
-    auto stopGenerateList = high_resolution_clock::now();
+    // получение объёма заполняемых данных
+    int length; //int length = 30 * 1000 * 1000;
+    std::cout << "Введите размер контейнера в тысячах: "; std::cin >> length;
+    length *= 1000;
+    std::string resultTest = "1 000 000 microseconds = 1 second\n";
 
-    float timeOfGenerateList = (float)duration_cast<nanoseconds>(stopGenerateList - startGenerateList).count() / 1000;
 
-    //Выведение
-    for (int i = 0; i < length / 100000; i++) {
-        std::cout << arrayOfRandomValues[i] << " ";
-    }
-    std::cout << std::endl;
+    // выбор контейнера, типа данных, параметров заполнения данными
+    int type = 0;
+    int conteinerType = 0;
+    double min, max, step;
 
-    // измерение времени доступа к массиву масива
+    std::cout << "Введите тип контейнера\n0 - динамический массив\t1 - vector \t2 - deque" << std::endl;
+    std::cout << "Введите id нужного контейнера: "; std::cin >> conteinerType;
 
-    auto startGetting = high_resolution_clock::now();
+    std::cout << "Введите тип данных для заполнения\n0 - int\t1 - long int\t2 - float\t3 - double" << std::endl;
+    std::cout << "Введите id нужного типа данных: "; std::cin >> type;
 
-    //-------------
-    int temp = 0;
-    for (int i = 1; i < length; i++) {
-        temp = arrayOfRandomValues[i];
-    }
-    //-------------
-
-    auto endGetting = high_resolution_clock::now();
-    float timeOfGettingValuesFromList = (float)duration_cast<nanoseconds>(endGetting - startGetting).count() / 1000;
-
-    std::cout << temp << std::endl;
-
-    // тестируемая операция
-    auto startTestingOfOperation = high_resolution_clock::now();
-
-    //-----------
-    long double result = arrayOfRandomValues[0];
-    
-    for (int i = 1; i < length; i++) {
-        result += arrayOfRandomValues[i];
-    }
-
-    //-----------
-
-    auto endTestingOfOperation = high_resolution_clock::now();
-    float timeOfTestingOfOperation = (float)duration_cast<nanoseconds>(endTestingOfOperation - startTestingOfOperation).count() / 1000;
-
-    //------------------
-    std::ofstream out;
-    out.open("result.txt");
-    if (out.is_open())
-    {
-        out << "1 000 000 microseconds = 1 second" << std::endl;
-        out << "Time of generate array: " << timeOfGenerateList << " microseconds" << std::endl;
-        out << "Time of getting values from list: " << timeOfGettingValuesFromList << " microseconds" << std::endl;
-        out << "Time of operation execution: " << timeOfTestingOfOperation << " microseconds" << std::endl;
-        out << "Time of one operation execution: " << (double) (timeOfTestingOfOperation - timeOfGettingValuesFromList) / length << " microseconds" << std::endl;
-        out << "The result = " << result << std::endl;
-    }
-    out.close();
-    //------------------------
-    std::string line;
-
-    std::ifstream in("result.txt");
-    if (in.is_open())
-    {
-        while (getline(in, line))
-        {
-            std::cout << line << std::endl;
+    std::cout << "Введите параметры для заполнения контейнера" << std::endl;
+    std::cout << "Введите значение минимального элемента: "; std::cin >> min;
+    std::cout << "Введите значение максимального элемента: "; std::cin >> max;
+    std::cout << "Введите значение шага чисел: "; std::cin >> step;
+    // создание контейнеров
+    if (conteinerType == 0) { // этот тип контейнера изначально не пошёл
+        if (type == 0) {
+            int* array = new int[length];
+            //Generator generator(array);
+        }
+        if (type == 1) {
+            long int* array = new long int[length];
+        }
+        if (type == 2) {
+            float* array = new float[length];
+        }
+        if (type == 3) {
+            double* array = new double[length];
         }
     }
-    in.close();
+    else if (conteinerType == 1) {
+        if (type == 0) {
+            std::vector<int> array(length);
+            Generator<std::vector<int>> generator{ array };
+            resultTest += generator.randint(min, max, step);
+            findMaxAndMin(array);
+            TimeTests<std::vector<int>> timeTests{ array };
+            resultTest += timeTests.testAccessToContainer();
+        }
+        if (type == 1) {
+            std::vector<long int> array(length);
+            Generator<std::vector<long int>> generator{ array };
+            resultTest += generator.randLongInt(min, max, step);
+            findMaxAndMin(array);
+            TimeTests<std::vector<long int>> timeTests{ array };
+            resultTest += timeTests.testAccessToContainer();
+        }
+        if (type == 2) {
+            std::vector<float> array(length);
+            Generator<std::vector<float>> generator{ array };
+            resultTest += generator.randFloat(min, max, step);
+            findMaxAndMin(array);
+            TimeTests<std::vector<float>> timeTests{ array };
+            resultTest += timeTests.testAccessToContainer();
+        }
+        if (type == 3) {
+            std::vector<double> array(length);
+            Generator<std::vector<double>> generator{ array };
+            resultTest += generator.randDouble(min, max, step);
+            findMaxAndMin(array);
+            TimeTests<std::vector<double>> timeTests{ array };
+            resultTest += timeTests.testAccessToContainer();
+        }
+        else if (conteinerType == 2) {
+            if (type == 0) {
+                std::deque<int> array(length);
+                Generator<std::deque<int>> generator{ array };
+                resultTest += generator.randint(min, max, step);
+                findMaxAndMin(array);
+                TimeTests<std::deque<int>> timeTests{ array };
+                resultTest += timeTests.testAccessToContainer();
+            }
+            if (type == 1) { // этот контейнер плохо работает я какие - то изменения провёл и он отвалился 
+                std::deque<int> array(length); // long int - не работает
+                Generator<std::deque<int>> generator{ array };
+                resultTest += generator.randLongInt(min, max, step);
+                findMaxAndMin(array);
+                TimeTests<std::deque<int>> timeTests{ array };
+                resultTest += timeTests.testAccessToContainer();
+            }
+            if (type == 2) {
+                std::deque<float> array(length);
+                Generator<std::deque<float>> generator{ array };
+                resultTest += generator.randFloat(min, max, step);
+                findMaxAndMin(array);
+                TimeTests<std::deque<float>> timeTests{ array };
+                resultTest += timeTests.testAccessToContainer();
+            }
+            if (type == 3) {
+                std::deque<double> array(length);
+                Generator<std::deque<double>> generator{ array };
+                resultTest += generator.randDouble(min, max, step);
+                findMaxAndMin(array);
+                TimeTests<std::deque<double>> timeTests{ array };
+                resultTest += timeTests.testAccessToContainer();
+            }
+        }
+        std::cout << resultTest << std::endl;
+    }
 }
