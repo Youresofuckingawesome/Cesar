@@ -1,0 +1,42 @@
+#include <iostream>
+#include <random>
+#include <chrono>
+#include <time.h>
+#include <vector>
+#include <math.h>
+
+#define LENGTH 1000
+#define TYPE int
+#define ARRAY_CAPACITY , LENGTH
+#define CONTAINER_TYPE std::vector<TYPE>
+#define FILL_OPERATOR container.push_back(random());
+#define ACTION sum = sum + container[i];
+
+int main(void)
+{
+	srand(time(0));
+	
+	CONTAINER_TYPE container;
+
+	auto start = std::chrono::high_resolution_clock::now();
+	for (int i = 0; i < LENGTH; i++)
+	{
+		FILL_OPERATOR
+	}
+	auto end = std::chrono::high_resolution_clock::now();
+
+	std::cout << "Fill time: " << std::chrono::duration<float, std::micro>(end - start).count() / 1000 << std::endl;
+
+	TYPE sum = 1;
+
+	auto nstart = std::chrono::high_resolution_clock::now();
+	for (int i = 0; i < LENGTH; i++)
+	{
+	    ACTION
+	}
+	auto nend = std::chrono::high_resolution_clock::now();
+
+	std::cout << "Operation time: " << std::chrono::duration<float, std::micro>(nend - nstart).count() / 1000 << std::endl;
+
+	return 0;
+}

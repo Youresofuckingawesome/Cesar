@@ -1,3 +1,3 @@
-SRC="src/main.cpp src/generator.cpp"
+SRC="src/main.cpp"
 
-g++ -g -o out ${SRC} -Isrc/ -Isrc/container
+g++ -g -o out ${SRC}
